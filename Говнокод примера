@@ -1,0 +1,124 @@
+#include <bits/stdc++.h>
+using namespace std;
+long long translate_int(string S)
+{
+    long long sum=0;
+     if (S.size()==1)
+        return S[0]-'0';
+    else
+        for (int i=0;i<S.size();i++)
+            sum+=(S[i]-'0')*pow(10,S.size()-i-1);
+    return sum;
+}
+double translate_doub(string S)
+{
+    double sum=0;
+    int rozdil;
+    rozdil=S.find_first_of('.',0);
+    if (S[1]=='.')
+          sum+=S[0]-'0';
+    else
+        for (int i=0;i<rozdil;i++)
+          sum+=(S[i]-'0')*pow(10,rozdil-1-i);
+    for (int i=rozdil+1;i<S.size();i++)
+        sum+=(S[i]-'0')*pow(10,rozdil-i);
+    return sum;
+}
+
+int main()
+{
+    freopen("expression_1.in","r",stdin);
+    freopen("expression_1.out","w",stdout);
+    string S,separator="+-*/";
+    int N=0;
+    while(getline(cin,S))
+    {
+        string first,last;
+        int place;
+    place=S.find_first_of(separator,0);
+    first=S.substr(0,place);
+    last=S.substr(place+1,S.size());
+    if (first.find_first_of('.',0)!=-1 || last.find_first_of('.',0)!=-1)
+    {
+        double one=translate_doub(first);
+        double two=translate_doub(last);
+        if (S[place]=='+')
+        {
+            if (N>0)
+              cout << '\n';
+            cout << fixed << setprecision(4) << one+two;
+            N++;
+        }
+        if (S[place]=='-')
+        {
+            if (N>0)
+              cout << '\n';
+            cout << fixed << setprecision(4) << one-two;
+            N++;
+        }
+        if (S[place]=='/')
+        {
+           if (N>0)
+            cout << '\n';
+           if (two==0)
+            cout << "Error";
+           else
+           {
+               double ans=(one*1.0/two);
+              cout << fixed << setprecision(4) << ans;
+           }
+           N++;
+        }
+        if (S[place]=='*')
+        {
+            if (N>0)
+                cout << '\n';
+            cout << fixed << setprecision(4) << one*two<< '\n';
+            N++;
+        }
+    }
+    else
+    {
+        long long one=translate_int(first);
+        long long two=translate_int(last);
+        if (S[place]=='+')
+    {
+        if (N>0)
+            cout << '\n';
+        cout << one+two;
+        N++;
+    }
+    if (S[place]=='-')
+    {
+         if (N>0)
+            cout << '\n';
+        cout << one-two;
+        N++;
+    }
+    if (S[place]=='/')
+    {
+        if (N>0)
+            cout << '\n';
+        if (two==0)
+            cout << "Error";
+        else
+        {
+            if (one%two==0)
+                cout << one/two;
+            else
+            {double ans=(one*1.000/two);
+            cout << fixed << setprecision(4) << ans;}
+        }
+        N++;
+    }
+    if (S[place]=='*')
+    {
+        if (N>0)
+            cout << '\n';
+        cout << one*two;
+        N++;
+    }
+    }
+
+    }
+}
