@@ -5,7 +5,7 @@ void output(double a,double b,char sign,int&N)
    if (sign=='+')
    {
        if (N>0)
-       cout << '\n';
+         cout << '\n';
        if (a+b == floor(a+b))
             cout << fixed << setprecision(0) << a+b;
        else
