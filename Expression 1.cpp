@@ -66,5 +66,5 @@ int main()
         double two=stod(last);
         output(one,two,S[place],N);
     }
-
+    return 0;
 }
